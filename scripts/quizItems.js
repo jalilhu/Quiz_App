@@ -1,9 +1,12 @@
+import { updateFile } from "./quizToSaveApi.js";
+
+
 let amountReceived = parseInt(
   new URLSearchParams(window.location.search).get("amount"),
   10
 );
 const ListOfAllQuiz = [];
-let body = document.body;
+
 document.addEventListener("DOMContentLoaded", function () {
   console.log("Page loaded successfully");
 
@@ -46,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (button === buttons[buttons.length - 1]) {
         itemRecived = collapseForm(parent);
         sendDataToLocalStorage(itemRecived);
-        nextButton();
+        // nextButton();
       }
     });
   });
@@ -55,16 +58,19 @@ function generateRandomId() {
     return `id-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
   }
 function sendDataToLocalStorage(itemRecived) {
+  
     itemRecived.id = generateRandomId()
   const getListOfData = localStorage.getItem("listOfQuiz");
   const arrayOfData = JSON.parse(getListOfData);
   checkIfDuplicateAndSave(itemRecived, arrayOfData);
+ 
 }
+
 
 function checkIfDuplicateAndSave(itemRecived, arrayOfData) {
     if (itemRecived) {
         const isDuplicate = arrayOfData.some(
-            (item) => JSON.stringify(item) === JSON.stringify(itemRecived) // Compare objects as strings
+            (item) => JSON.stringify(item) === JSON.stringify(itemRecived) 
         );
 
         if (!isDuplicate) {
@@ -75,7 +81,7 @@ function checkIfDuplicateAndSave(itemRecived, arrayOfData) {
             console.log(itemRecived.id, "    is ID ");
 
             console.log(itemRecived);
-            arrayOfData.push(itemRecived); // Add the new object to the array only if it's not a duplicate
+            arrayOfData.push(itemRecived); 
             console.log("New data added:", itemRecived.id);
         } else {
             console.log("Duplicate data, not added:", itemRecived.id);
@@ -84,6 +90,8 @@ function checkIfDuplicateAndSave(itemRecived, arrayOfData) {
         console.error("formData-2 is null or invalid!");
     }
     localStorage.setItem("allItem", JSON.stringify(ListOfAllQuiz));
+    updateFile(ListOfAllQuiz, "Questions Updated")
+    console.log("it is updating")
 }
 
 function nextButton() {
@@ -255,23 +263,3 @@ function collapseForm(form) {
   return parseData;
 }
 
-//
-//{question-1: 'capital', option-1: 'berlin', option-2: 'oslo', option-3: 'munich', option-4: 'hamburg', …}
-// Choice-2
-// :
-// "on"
-// option-1
-// :
-// "berlin"
-// option-2
-// :
-// "oslo"
-// option-3
-// :
-// "munich"
-// option-4
-// :
-// "hamburg"
-// question-1
-// :
-// "capital"
