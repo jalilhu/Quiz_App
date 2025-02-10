@@ -1,7 +1,9 @@
+import { fetchJsonFile } from "./quizToSaveApi.js"
 
-const body = document.body
-const allQuiz = JSON.parse(localStorage.getItem('allItem'))
-console.log(allQuiz)
+const questionsV2 = await fetchJsonFile()
+const questions =  JSON.parse(localStorage.getItem("allItem") || "{}");
+console.log(questions)
+
 
 
 createQuizContainer()
@@ -86,7 +88,7 @@ function createContainerDiv() {
   function getCurrectAnswer(chosenAnswer, questionGiven){
      
       let arrayOfReturns = ["", false]
-    allQuiz.forEach(element => {
+    questions.forEach(element => {
             if(element.question === questionGiven){
                 arrayOfReturns[0] = element.correctAnswer
                 if(element.correctAnswer === chosenAnswer){
@@ -112,7 +114,7 @@ function createContainerDiv() {
     let num = 1
     const containerDiv = createContainerDiv();
 
-    for (let quiz of allQuiz) {
+    for (let quiz of questions) {
       const quizDiv = createFormParent();
       const divContainer = document.createElement('div')
       const topOfTitle = document.createElement('h4')
