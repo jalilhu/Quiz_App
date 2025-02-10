@@ -20,6 +20,7 @@ main {
 
 
 
+
 .quiz-container {
     position: relative;
     width: 40%;
@@ -353,3 +354,21 @@ main {
 .buttons-player1 {}
 
 .buttons-player2 {}
+
+@media (max-width: 800px) {
+main{
+    flex-direction: column;
+}
+.quiz-container{
+    width: 80%;
+}
+
+}
+@media (max-width: 315px) {
+
+.quiz-container{
+    width: 90%;
+    border-bottom: 1px solid black;
+}
+
+}
